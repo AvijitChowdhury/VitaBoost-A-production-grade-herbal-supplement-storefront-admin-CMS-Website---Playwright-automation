@@ -5,7 +5,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Loader2, ShieldAlert } from "lucide-react";
-import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminLayout,
