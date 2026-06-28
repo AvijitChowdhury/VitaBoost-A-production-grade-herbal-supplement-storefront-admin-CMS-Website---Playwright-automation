@@ -20,7 +20,12 @@ function AdminLayout() {
       setState("not_admin");
       return;
     }
-    const { data, error } = await supabase.rpc("has_role", { _user_id: u.user.id, _role: "admin" });
+    const { data, error } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", u.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
     if (error) {
       console.error(error);
       setState("not_admin");
@@ -33,19 +38,6 @@ function AdminLayout() {
     check();
   }, []);
 
-  async function claim() {
-    const { data, error } = await supabase.rpc("claim_first_admin");
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    if (data) {
-      toast.success("Admin access granted to this account.");
-      check();
-    } else {
-      toast.error("An admin already exists. Ask them to grant you access.");
-    }
-  }
 
   if (state === "loading") {
     return (
