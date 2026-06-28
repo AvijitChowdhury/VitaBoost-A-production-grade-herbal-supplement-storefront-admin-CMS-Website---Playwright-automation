@@ -14,8 +14,9 @@ type Product = {
 
 export function Hero({ product }: { product: Product }) {
   const img = resolveImage(product.image);
-  const price = Number(product.discount_price ?? product.price);
-  const original = product.discount_price ? Number(product.price) : null;
+  const price = Math.round(Number(product.discount_price ?? product.price));
+  const original = product.discount_price ? Math.round(Number(product.price)) : null;
+  const savePct = original ? Math.round(((original - price) / original) * 100) : 0;
 
   return (
     <section id="top" className="bg-leaf-gradient">
