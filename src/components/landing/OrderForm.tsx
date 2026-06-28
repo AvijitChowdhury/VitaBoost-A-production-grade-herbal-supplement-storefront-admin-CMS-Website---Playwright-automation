@@ -16,7 +16,7 @@ export function OrderForm({ product }: { product: Product }) {
   const submit = useServerFn(submitOrder);
   const [qty, setQty] = useState(1);
   const [payment, setPayment] = useState<"cod" | "online">("cod");
-  const [done, setDone] = useState<{ id: string; total: number } | null>(null);
+  const [done, setDone] = useState<{ total: number } | null>(null);
 
   const unit = Number(product.discount_price ?? product.price);
   const total = (unit * qty).toFixed(2);
