@@ -103,6 +103,7 @@ export type Database = {
           quantity: number
           status: string
           total_price: number
+          updated_at: string
         }
         Insert: {
           address: string
@@ -114,6 +115,7 @@ export type Database = {
           quantity?: number
           status?: string
           total_price?: number
+          updated_at?: string
         }
         Update: {
           address?: string
@@ -125,6 +127,7 @@ export type Database = {
           quantity?: number
           status?: string
           total_price?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -135,6 +138,7 @@ export type Database = {
           headline: string | null
           id: string
           image: string | null
+          ingredients: string | null
           name: string
           price: number
           short_description: string | null
@@ -148,6 +152,7 @@ export type Database = {
           headline?: string | null
           id?: string
           image?: string | null
+          ingredients?: string | null
           name: string
           price?: number
           short_description?: string | null
@@ -161,6 +166,7 @@ export type Database = {
           headline?: string | null
           id?: string
           image?: string | null
+          ingredients?: string | null
           name?: string
           price?: number
           short_description?: string | null
