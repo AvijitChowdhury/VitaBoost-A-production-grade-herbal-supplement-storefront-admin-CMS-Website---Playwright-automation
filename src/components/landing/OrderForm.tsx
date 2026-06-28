@@ -16,7 +16,7 @@ export function OrderForm({ product }: { product: Product }) {
   const submit = useServerFn(submitOrder);
   const [qty, setQty] = useState(1);
   const [payment, setPayment] = useState<"cod" | "online">("cod");
-  const [done, setDone] = useState<{ id: string; total: number } | null>(null);
+  const [done, setDone] = useState<{ total: number } | null>(null);
 
   const unit = Number(product.discount_price ?? product.price);
   const total = (unit * qty).toFixed(2);
@@ -33,7 +33,7 @@ export function OrderForm({ product }: { product: Product }) {
       return submit({ data: payload });
     },
     onSuccess: (res) => {
-      setDone({ id: res.id, total: Number(res.total) });
+      setDone({ total: Number(res.total) });
       toast.success("Order placed! We'll reach out to confirm.");
     },
     onError: (e: Error) => toast.error(e.message ?? "Could not place order"),
@@ -45,7 +45,7 @@ export function OrderForm({ product }: { product: Product }) {
         <CheckCircle2 className="mx-auto h-12 w-12 text-secondary" />
         <h3 className="mt-4 font-display text-2xl text-foreground">Order confirmed</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Reference <span className="font-mono text-foreground">{done.id.slice(0, 8)}</span> · Total ₹{done.total.toLocaleString("en-IN")}
+          Total ₹{done.total.toLocaleString("en-IN")}
         </p>
         <p className="mt-4 text-sm text-muted-foreground">
           Our team will call you within 24 hours to confirm delivery details.
