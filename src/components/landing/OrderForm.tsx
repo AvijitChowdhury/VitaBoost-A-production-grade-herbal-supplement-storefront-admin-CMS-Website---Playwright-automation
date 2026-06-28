@@ -45,7 +45,7 @@ export function OrderForm({ product }: { product: Product }) {
         <CheckCircle2 className="mx-auto h-12 w-12 text-secondary" />
         <h3 className="mt-4 font-display text-2xl text-foreground">Order confirmed</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Reference <span className="font-mono text-foreground">{done.id.slice(0, 8)}</span> · Total ₹{done.total.toLocaleString("en-IN")}
+          Total ₹{done.total.toLocaleString("en-IN")}
         </p>
         <p className="mt-4 text-sm text-muted-foreground">
           Our team will call you within 24 hours to confirm delivery details.
