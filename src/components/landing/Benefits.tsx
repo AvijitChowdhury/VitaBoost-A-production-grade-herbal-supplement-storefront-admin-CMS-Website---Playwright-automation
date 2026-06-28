@@ -28,9 +28,9 @@ export function Benefits({ items }: { items: Benefit[] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group rounded-2xl border border-border bg-card p-6 transition hover:shadow-md"
+              className="group rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-secondary/60 hover:shadow-lg hover:shadow-secondary/10"
             >
-              <div className="mb-4 inline-grid h-11 w-11 place-items-center rounded-xl bg-secondary/30 text-foreground transition group-hover:bg-secondary/50">
+              <div className="mb-4 inline-grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-secondary/40 to-secondary/10 text-primary transition group-hover:from-secondary/60 group-hover:to-secondary/20">
                 <Icon className="h-5 w-5" />
               </div>
               <h3 className="font-display text-lg text-foreground">{b.title}</h3>
