@@ -272,6 +272,7 @@ export type Database = {
     }
     Functions: {
       claim_first_admin: { Args: never; Returns: boolean }
+      debug_role: { Args: never; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
