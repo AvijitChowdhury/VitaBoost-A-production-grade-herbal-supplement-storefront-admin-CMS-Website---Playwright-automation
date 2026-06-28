@@ -35,11 +35,19 @@ export function CrudPage<T extends Row>({
   const [editing, setEditing] = useState<T | null>(null);
   const [open, setOpen] = useState(false);
 
+  // Cast through unknown because table name is dynamic and Supabase types want a literal.
+  const db = supabase.from(table as never) as unknown as {
+    select: (q: string) => { order: (c: string, o: { ascending: boolean }) => Promise<{ data: T[] | null; error: { message: string } | null }> };
+    update: (p: Record<string, unknown>) => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+    insert: (p: Record<string, unknown>) => Promise<{ error: { message: string } | null }>;
+    delete: () => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+  };
+
   async function load() {
     setLoading(true);
-    const { data, error } = await supabase.from(table).select("*").order(orderBy, { ascending: true });
+    const { data, error } = await db.select("*").order(orderBy, { ascending: true });
     if (error) toast.error(error.message);
-    setRows((data as T[]) ?? []);
+    setRows(data ?? []);
     setLoading(false);
   }
   useEffect(() => { load(); }, []);
@@ -54,10 +62,9 @@ export function CrudPage<T extends Row>({
       else if (f.type === "boolean") payload[f.name] = fd.get(f.name) === "on";
       else payload[f.name] = v === "" ? null : String(v ?? "");
     });
-    const op = editing
-      ? supabase.from(table).update(payload).eq("id", editing.id)
-      : supabase.from(table).insert(payload);
-    const { error } = await op;
+    const { error } = await (editing
+      ? db.update(payload).eq("id", editing.id)
+      : db.insert(payload));
     if (error) return toast.error(error.message);
     toast.success(editing ? "Saved" : "Created");
     setOpen(false); setEditing(null); load();
@@ -65,10 +72,11 @@ export function CrudPage<T extends Row>({
 
   async function remove(id: string) {
     if (!confirm("Delete this item?")) return;
-    const { error } = await supabase.from(table).delete().eq("id", id);
+    const { error } = await db.delete().eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Deleted"); load();
   }
+
 
   return (
     <div className="space-y-4">
