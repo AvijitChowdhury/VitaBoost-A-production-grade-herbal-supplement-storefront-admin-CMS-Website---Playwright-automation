@@ -74,6 +74,6 @@ export const submitOrder = createServerFn({ method: "POST" })
       .select("id,total_price,created_at")
       .single();
 
-    if (error) throw new Error("Could not place order. Please try again.");
+    if (error) { console.error("submitOrder insert error", error); throw new Error(`Could not place order: ${error.message}`); }
     return { id: inserted.id, total: inserted.total_price, placed_at: inserted.created_at };
   });
