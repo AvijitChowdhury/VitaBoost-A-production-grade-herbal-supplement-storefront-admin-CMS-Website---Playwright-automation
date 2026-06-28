@@ -14,8 +14,9 @@ type Product = {
 
 export function Hero({ product }: { product: Product }) {
   const img = resolveImage(product.image);
-  const price = Number(product.discount_price ?? product.price);
-  const original = product.discount_price ? Number(product.price) : null;
+  const price = Math.round(Number(product.discount_price ?? product.price));
+  const original = product.discount_price ? Math.round(Number(product.price)) : null;
+  const savePct = original ? Math.round(((original - price) / original) * 100) : 0;
 
   return (
     <section id="top" className="bg-leaf-gradient">
@@ -45,8 +46,8 @@ export function Hero({ product }: { product: Product }) {
               </span>
             )}
             {original && (
-              <span className="rounded-full bg-honey/30 px-2 py-0.5 text-xs font-medium text-foreground">
-                Save ₹{(original - price).toLocaleString("en-IN")}
+              <span className="rounded-full bg-honey/30 px-2.5 py-0.5 text-xs font-medium text-foreground">
+                Save ₹{(original - price).toLocaleString("en-IN")} ({savePct}% off)
               </span>
             )}
           </div>

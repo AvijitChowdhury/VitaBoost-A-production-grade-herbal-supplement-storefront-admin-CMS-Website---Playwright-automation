@@ -21,14 +21,16 @@ export function Ingredients({ items }: { items: Ingredient[] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="overflow-hidden rounded-2xl border border-border bg-card"
+              className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary/10"
             >
-              <img
-                src={resolveImage(ing.image)}
-                alt={ing.name}
-                loading="lazy"
-                className="aspect-[4/3] w-full object-cover"
-              />
+              <div className="overflow-hidden">
+                <img
+                  src={resolveImage(ing.image)}
+                  alt={ing.name}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
               <figcaption className="p-5">
                 <h3 className="font-display text-lg text-foreground">{ing.name}</h3>
                 {ing.description && (

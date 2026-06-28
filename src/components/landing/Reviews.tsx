@@ -27,7 +27,7 @@ export function Reviews({ items }: { items: Testimonial[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.4, delay: i * 0.05 }}
-            className="rounded-2xl border border-border bg-card p-6"
+            className="rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary/10"
           >
             <div className="flex items-center gap-1 text-honey">
               {Array.from({ length: t.rating ?? 5 }).map((_, j) => (
