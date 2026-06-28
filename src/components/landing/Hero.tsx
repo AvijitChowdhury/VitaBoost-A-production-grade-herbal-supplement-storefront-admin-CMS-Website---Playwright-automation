@@ -46,8 +46,8 @@ export function Hero({ product }: { product: Product }) {
               </span>
             )}
             {original && (
-              <span className="rounded-full bg-honey/30 px-2 py-0.5 text-xs font-medium text-foreground">
-                Save ₹{(original - price).toLocaleString("en-IN")}
+              <span className="rounded-full bg-honey/30 px-2.5 py-0.5 text-xs font-medium text-foreground">
+                Save ₹{(original - price).toLocaleString("en-IN")} ({savePct}% off)
               </span>
             )}
           </div>
