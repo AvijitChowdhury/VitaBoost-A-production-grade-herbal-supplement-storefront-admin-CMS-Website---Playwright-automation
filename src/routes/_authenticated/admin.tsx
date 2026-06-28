@@ -54,11 +54,9 @@ function AdminLayout() {
           <ShieldAlert className="mx-auto h-10 w-10 text-honey" />
           <h1 className="mt-3 font-display text-2xl text-foreground">Admin access required</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            This account doesn't have the admin role yet. If you're the first user,
-            claim admin access below.
+            This account doesn't have the admin role. Ask an existing admin to grant access.
           </p>
           <div className="mt-5 flex flex-col gap-2">
-            <Button onClick={claim}>Claim first-admin access</Button>
             <Button variant="outline" asChild>
               <Link to="/">Back to site</Link>
             </Button>
