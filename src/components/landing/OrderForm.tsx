@@ -33,7 +33,7 @@ export function OrderForm({ product }: { product: Product }) {
       return submit({ data: payload });
     },
     onSuccess: (res) => {
-      setDone({ id: res.id, total: Number(res.total) });
+      setDone({ total: Number(res.total) });
       toast.success("Order placed! We'll reach out to confirm.");
     },
     onError: (e: Error) => toast.error(e.message ?? "Could not place order"),
