@@ -9,7 +9,17 @@ import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Admin sign in — VitaBoost+" }] }),
+  head: () => ({
+    meta: [
+      { title: "Admin sign in — VitaBoost+" },
+      { name: "description", content: "Private admin sign-in for VitaBoost+ store operators." },
+      { name: "robots", content: "noindex, nofollow" },
+      { property: "og:title", content: "Admin sign in — VitaBoost+" },
+      { property: "og:description", content: "Private admin sign-in for VitaBoost+ store operators." },
+      { property: "og:url", content: "https://vitaboostavijit.lovable.app/auth" },
+    ],
+    links: [{ rel: "canonical", href: "https://vitaboostavijit.lovable.app/auth" }],
+  }),
   component: AuthPage,
 });
 
