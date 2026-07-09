@@ -31,7 +31,7 @@ export function Hero({ product }: { product: Product }) {
             <Sparkles className="h-3.5 w-3.5" /> 100% plant-based · Ayurvedic
           </span>
           <h1 className="font-display text-4xl leading-tight tracking-tight text-foreground md:text-6xl">
-            {product.headline ?? product.name}
+            {product.headline ?? `${product.name} — Premium Herbal Immunity Supplement`}
           </h1>
           <p className="max-w-lg text-base text-muted-foreground md:text-lg">
             {product.short_description}
@@ -82,10 +82,14 @@ export function Hero({ product }: { product: Product }) {
           <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
             <img
               src={img}
-              alt={`${product.name} bottle`}
+              alt={`${product.name} bottle — premium Ayurvedic herbal immunity capsules`}
               className="aspect-square w-full object-cover"
               loading="eager"
+              fetchPriority="high"
+              width={800}
+              height={800}
             />
+
           </div>
           {product.ingredients && (
             <div className="mt-4 rounded-2xl border border-border bg-card/80 p-4 text-sm text-muted-foreground backdrop-blur">

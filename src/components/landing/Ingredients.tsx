@@ -26,8 +26,10 @@ export function Ingredients({ items }: { items: Ingredient[] }) {
               <div className="overflow-hidden">
                 <img
                   src={resolveImage(ing.image)}
-                  alt={ing.name}
+                  alt={ing.description ? `${ing.name} — ${ing.description}` : `${ing.name} herbal ingredient used in VitaBoost+ capsules`}
                   loading="lazy"
+                  width={600}
+                  height={450}
                   className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
