@@ -1,0 +1,1 @@
+{"uuid": "a1db9025-d4d6-4098-a1b9-6b24fbb3be63", "children": ["8b4d72bd-9d3b-4ea2-b594-5ac62bfdca5e"], "befores": [{"name": "snap", "status": "passed", "start": 1783581147798, "stop": 1783581147798}], "afters": [{"name": "snap::<lambda>", "start": 1783581150315}], "start": 1783581147798, "stop": 1783581150315}
