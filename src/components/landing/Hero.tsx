@@ -82,10 +82,14 @@ export function Hero({ product }: { product: Product }) {
           <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
             <img
               src={img}
-              alt={`${product.name} bottle`}
+              alt={`${product.name} bottle — premium Ayurvedic herbal immunity capsules`}
               className="aspect-square w-full object-cover"
               loading="eager"
+              fetchPriority="high"
+              width={800}
+              height={800}
             />
+
           </div>
           {product.ingredients && (
             <div className="mt-4 rounded-2xl border border-border bg-card/80 p-4 text-sm text-muted-foreground backdrop-blur">
