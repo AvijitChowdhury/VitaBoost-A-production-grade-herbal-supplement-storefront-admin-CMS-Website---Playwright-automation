@@ -76,7 +76,7 @@ export const submitOrder = createServerFn({ method: "POST" })
 
     if (error) {
       console.error("submitOrder insert error", error);
-      throw new Error(`Could not place order: ${error.message}`);
+      throw new Error("Could not place order. Please try again.");
     }
     return { total, placed_at: new Date().toISOString() };
   });
