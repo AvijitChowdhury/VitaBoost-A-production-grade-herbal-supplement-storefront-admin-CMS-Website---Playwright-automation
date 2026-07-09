@@ -239,6 +239,8 @@ graph LR
     AShots --> RM
 ```
 
+### 6.2 Run it
+
 
 
 ```bash
