@@ -20,23 +20,33 @@ const landingQuery = queryOptions({
   staleTime: 60_000,
 });
 
+const SITE_URL = "https://vitaboostavijit.lovable.app";
+const OG_IMAGE =
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4b6f579a-cdf0-4db3-b6ce-afd8bc2fab57";
+
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(landingQuery),
   head: () => ({
     meta: [
-      { title: "VitaBoost+ — Premium Herbal Immunity Supplement" },
+      { title: "VitaBoost+ — Ayurvedic Immunity Capsules with Tulsi, Ashwagandha & Amla" },
       {
         name: "description",
         content:
-          "Daily herbal immunity capsules made with Tulsi, Ashwagandha, Ginger, Turmeric, Amla & Giloy. Lab-tested, 100% plant-based.",
+          "Daily herbal immunity capsules made with Tulsi, Ashwagandha, Ginger, Turmeric, Amla & Giloy. Lab-tested, 100% plant-based, Cash on Delivery available across India.",
       },
-      { property: "og:title", content: "VitaBoost+ — Premium Herbal Immunity Supplement" },
+      { property: "og:title", content: "VitaBoost+ — Ayurvedic Immunity Capsules" },
       {
         property: "og:description",
-        content: "Six time-honoured herbs. Nothing else. Order online with Cash on Delivery available.",
+        content: "Six time-honoured herbs in one daily capsule. Lab-tested. Cash on Delivery available.",
       },
       { property: "og:type", content: "product" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:title", content: "VitaBoost+ — Ayurvedic Immunity Capsules" },
+      { name: "twitter:description", content: "Six time-honoured herbs in one daily capsule. Lab-tested." },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
   }),
   component: LandingPage,
   errorComponent: ({ error }) => (
