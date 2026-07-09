@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as DoshaQuizRouteImport } from './routes/dosha-quiz'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -26,6 +27,11 @@ import { Route as AuthenticatedAdminBenefitsRouteImport } from './routes/_authen
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoshaQuizRoute = DoshaQuizRouteImport.update({
+  id: '/dosha-quiz',
+  path: '/dosha-quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -97,6 +103,7 @@ const AuthenticatedAdminBenefitsRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dosha-quiz': typeof DoshaQuizRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/benefits': typeof AuthenticatedAdminBenefitsRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dosha-quiz': typeof DoshaQuizRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/benefits': typeof AuthenticatedAdminBenefitsRoute
   '/admin/faq': typeof AuthenticatedAdminFaqRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/dosha-quiz': typeof DoshaQuizRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/benefits': typeof AuthenticatedAdminBenefitsRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/dosha-quiz'
     | '/sitemap.xml'
     | '/admin'
     | '/admin/benefits'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/dosha-quiz'
     | '/sitemap.xml'
     | '/admin/benefits'
     | '/admin/faq'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/dosha-quiz'
     | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/_authenticated/admin/benefits'
@@ -186,6 +198,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  DoshaQuizRoute: typeof DoshaQuizRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -196,6 +209,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dosha-quiz': {
+      id: '/dosha-quiz'
+      path: '/dosha-quiz'
+      fullPath: '/dosha-quiz'
+      preLoaderRoute: typeof DoshaQuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -325,6 +345,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  DoshaQuizRoute: DoshaQuizRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
