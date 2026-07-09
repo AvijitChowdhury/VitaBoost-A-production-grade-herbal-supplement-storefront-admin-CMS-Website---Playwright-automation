@@ -102,29 +102,38 @@ if a feature regresses, the screenshot regenerates and the test fails.
 
 ## 4. Architecture
 
-```text
-                         ┌─────────────────────────────┐
-     Browser ──────────▶ │  TanStack Start (SSR + CSR) │
-                         │  src/routes/**              │
-                         └──────────────┬──────────────┘
-                                        │ createServerFn (typed RPC)
-                                        ▼
-                         ┌─────────────────────────────┐
-                         │  src/lib/*.functions.ts     │
-                         │  - getLandingData           │
-                         │  - submitOrder (Zod)        │
-                         └──────────────┬──────────────┘
-                                        │ supabase-js (anon or bearer)
-                                        ▼
-                         ┌─────────────────────────────┐
-                         │  Postgres (Supabase)        │
-                         │  RLS + user_roles + has_role│
-                         │  benefits / ingredients /   │
-                         │  testimonials / faq /       │
-                         │  product / settings /       │
-                         │  orders / user_roles        │
-                         └─────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Client["Browser (SSR + CSR)"]
+        UI[React 19 UI<br/>Tailwind v4 + shadcn/ui]
+        Router[TanStack Router<br/>File-based routes]
+        Query[TanStack Query<br/>Suspense cache]
+    end
+
+    subgraph Edge["Cloudflare Workers (Edge Runtime)"]
+        SSR[TanStack Start SSR]
+        SF[Server Functions<br/>createServerFn + Zod<br/>getLandingData / submitOrder]
+        API[Public API Routes<br/>/api/public/*]
+    end
+
+    subgraph Backend["Supabase (Postgres)"]
+        Auth[Auth<br/>JWT + Sessions]
+        DB[(Postgres<br/>+ RLS Policies)]
+        Roles[user_roles<br/>has_role SECURITY DEFINER]
+    end
+
+    UI --> Router
+    Router --> Query
+    Query -->|typed RPC| SF
+    Router -->|SSR request| SSR
+    SSR --> SF
+    SF -->|supabase-js| DB
+    SF --> Auth
+    UI -->|sign in| Auth
+    DB -.->|RLS check| Roles
+    API --> DB
 ```
+
 
 ### 4.1 Route map
 
