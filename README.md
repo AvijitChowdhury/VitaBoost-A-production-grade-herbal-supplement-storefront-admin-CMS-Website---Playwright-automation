@@ -258,7 +258,7 @@ E2E_ADMIN_PASSWORD=... \
 python -m pytest tests/e2e
 ```
 
-### 6.2 Allure report
+### 6.3 Allure report
 
 ```
 23 tests · 5 suites · 2 features · 0 failures
