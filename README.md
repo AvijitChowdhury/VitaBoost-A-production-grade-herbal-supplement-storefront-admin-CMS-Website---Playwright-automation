@@ -197,7 +197,49 @@ tests/e2e/
 └── run.sh                # one-shot: pytest → allure generate → screenshots
 ```
 
-### 6.1 Run it
+### 6.1 Testing architecture
+
+```mermaid
+graph LR
+    subgraph Suite["tests/e2e/ — Playwright + pytest"]
+        Landing[test_landing.py<br/>7 tests]
+        Order[test_order_flow.py<br/>2 tests]
+        AuthT[test_auth.py<br/>3 tests]
+        Admin[test_admin.py<br/>8 tests]
+        SEO[test_seo.py<br/>3 tests]
+    end
+
+    subgraph Runner["run.sh"]
+        Pytest[pytest --alluredir]
+        Gen[allure generate]
+        Cap[capture_allure.py<br/>headless report screenshots]
+    end
+
+    subgraph App["App Under Test"]
+        Local[localhost:8080<br/>or published URL]
+    end
+
+    subgraph Output["Artifacts"]
+        Shots[screenshots/*.png<br/>feature evidence]
+        Results[allure-results/<br/>JSON + attachments]
+        Report[allure-report/<br/>interactive HTML]
+        AShots[screenshots/allure/*.png<br/>report views]
+        RM[README.md<br/>embeds both galleries]
+    end
+
+    Landing & Order & AuthT & Admin & SEO -->|drive Chromium| Local
+    Landing & Order & AuthT & Admin & SEO -->|attach| Results
+    Landing & Order & AuthT & Admin & SEO -->|save| Shots
+    Pytest --> Results
+    Results --> Gen
+    Gen --> Report
+    Report --> Cap
+    Cap --> AShots
+    Shots --> RM
+    AShots --> RM
+```
+
+
 
 ```bash
 python -m pip install pytest pytest-playwright allure-pytest
