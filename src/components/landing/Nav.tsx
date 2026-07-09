@@ -1,4 +1,5 @@
 import { Leaf } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export function Nav({ storeName }: { storeName: string }) {
   return (
@@ -15,6 +16,7 @@ export function Nav({ storeName }: { storeName: string }) {
           <a href="#ingredients" className="hover:text-foreground">Ingredients</a>
           <a href="#reviews" className="hover:text-foreground">Reviews</a>
           <a href="#faq" className="hover:text-foreground">FAQ</a>
+          <Link to="/dosha-quiz" className="hover:text-foreground">Dosha Quiz</Link>
         </nav>
         <a
           href="#order"
