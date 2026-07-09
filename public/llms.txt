@@ -1,0 +1,14 @@
+# VitaBoost+
+
+> Premium herbal immunity supplement made with six time-honoured Ayurvedic
+> herbs — Tulsi, Ashwagandha, Ginger, Turmeric, Amla and Giloy. Lab-tested,
+> 100% plant-based, delivered across India with Cash on Delivery available.
+
+VitaBoost+ is a direct-to-consumer wellness brand selling a single herbal
+immunity capsule. The site is a one-page storefront covering product
+benefits, ingredients, usage instructions, customer reviews, FAQs, and an
+inline order form.
+
+## Pages
+
+- [Home](/): Product overview, benefits, ingredients, reviews, FAQ, and order form.
