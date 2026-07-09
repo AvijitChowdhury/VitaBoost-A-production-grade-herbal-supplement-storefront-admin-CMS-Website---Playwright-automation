@@ -31,7 +31,7 @@ export function Hero({ product }: { product: Product }) {
             <Sparkles className="h-3.5 w-3.5" /> 100% plant-based · Ayurvedic
           </span>
           <h1 className="font-display text-4xl leading-tight tracking-tight text-foreground md:text-6xl">
-            {product.headline ?? product.name}
+            {product.headline ?? `${product.name} — Premium Herbal Immunity Supplement`}
           </h1>
           <p className="max-w-lg text-base text-muted-foreground md:text-lg">
             {product.short_description}
