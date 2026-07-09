@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"a00e77a0127aec260a8eda0e701fc3b2","name":"Storefront","statistic":{"failed":0,"broken":0,"skipped":0,"passed":3,"unknown":0,"total":3}},{"uid":"c3b16b8f7d7bd711f8a5b0ecc52eed21","name":"Admin","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}
