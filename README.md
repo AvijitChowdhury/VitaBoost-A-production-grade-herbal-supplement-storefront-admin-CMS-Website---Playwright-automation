@@ -102,29 +102,38 @@ if a feature regresses, the screenshot regenerates and the test fails.
 
 ## 4. Architecture
 
-```text
-                         ┌─────────────────────────────┐
-     Browser ──────────▶ │  TanStack Start (SSR + CSR) │
-                         │  src/routes/**              │
-                         └──────────────┬──────────────┘
-                                        │ createServerFn (typed RPC)
-                                        ▼
-                         ┌─────────────────────────────┐
-                         │  src/lib/*.functions.ts     │
-                         │  - getLandingData           │
-                         │  - submitOrder (Zod)        │
-                         └──────────────┬──────────────┘
-                                        │ supabase-js (anon or bearer)
-                                        ▼
-                         ┌─────────────────────────────┐
-                         │  Postgres (Supabase)        │
-                         │  RLS + user_roles + has_role│
-                         │  benefits / ingredients /   │
-                         │  testimonials / faq /       │
-                         │  product / settings /       │
-                         │  orders / user_roles        │
-                         └─────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Client["Browser (SSR + CSR)"]
+        UI[React 19 UI<br/>Tailwind v4 + shadcn/ui]
+        Router[TanStack Router<br/>File-based routes]
+        Query[TanStack Query<br/>Suspense cache]
+    end
+
+    subgraph Edge["Cloudflare Workers (Edge Runtime)"]
+        SSR[TanStack Start SSR]
+        SF[Server Functions<br/>createServerFn + Zod<br/>getLandingData / submitOrder]
+        API[Public API Routes<br/>/api/public/*]
+    end
+
+    subgraph Backend["Supabase (Postgres)"]
+        Auth[Auth<br/>JWT + Sessions]
+        DB[(Postgres<br/>+ RLS Policies)]
+        Roles[user_roles<br/>has_role SECURITY DEFINER]
+    end
+
+    UI --> Router
+    Router --> Query
+    Query -->|typed RPC| SF
+    Router -->|SSR request| SSR
+    SSR --> SF
+    SF -->|supabase-js| DB
+    SF --> Auth
+    UI -->|sign in| Auth
+    DB -.->|RLS check| Roles
+    API --> DB
 ```
+
 
 ### 4.1 Route map
 
@@ -188,7 +197,51 @@ tests/e2e/
 └── run.sh                # one-shot: pytest → allure generate → screenshots
 ```
 
-### 6.1 Run it
+### 6.1 Testing architecture
+
+```mermaid
+graph LR
+    subgraph Suite["tests/e2e/ — Playwright + pytest"]
+        Landing[test_landing.py<br/>7 tests]
+        Order[test_order_flow.py<br/>2 tests]
+        AuthT[test_auth.py<br/>3 tests]
+        Admin[test_admin.py<br/>8 tests]
+        SEO[test_seo.py<br/>3 tests]
+    end
+
+    subgraph Runner["run.sh"]
+        Pytest[pytest --alluredir]
+        Gen[allure generate]
+        Cap[capture_allure.py<br/>headless report screenshots]
+    end
+
+    subgraph App["App Under Test"]
+        Local[localhost:8080<br/>or published URL]
+    end
+
+    subgraph Output["Artifacts"]
+        Shots[screenshots/*.png<br/>feature evidence]
+        Results[allure-results/<br/>JSON + attachments]
+        Report[allure-report/<br/>interactive HTML]
+        AShots[screenshots/allure/*.png<br/>report views]
+        RM[README.md<br/>embeds both galleries]
+    end
+
+    Landing & Order & AuthT & Admin & SEO -->|drive Chromium| Local
+    Landing & Order & AuthT & Admin & SEO -->|attach| Results
+    Landing & Order & AuthT & Admin & SEO -->|save| Shots
+    Pytest --> Results
+    Results --> Gen
+    Gen --> Report
+    Report --> Cap
+    Cap --> AShots
+    Shots --> RM
+    AShots --> RM
+```
+
+### 6.2 Run it
+
+
 
 ```bash
 python -m pip install pytest pytest-playwright allure-pytest
@@ -207,7 +260,7 @@ E2E_ADMIN_PASSWORD=... \
 python -m pytest tests/e2e
 ```
 
-### 6.2 Allure report
+### 6.3 Allure report
 
 ```
 23 tests · 5 suites · 2 features · 0 failures

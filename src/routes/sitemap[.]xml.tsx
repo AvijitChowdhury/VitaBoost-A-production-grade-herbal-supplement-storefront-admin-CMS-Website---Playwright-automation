@@ -10,6 +10,8 @@ interface SitemapEntry {
 }
 
 export const Route = createFileRoute("/sitemap.xml")({
+  // @ts-expect-error - server handlers accepted at runtime via TanStack Start plugin
+
   server: {
     handlers: {
       GET: async () => {
