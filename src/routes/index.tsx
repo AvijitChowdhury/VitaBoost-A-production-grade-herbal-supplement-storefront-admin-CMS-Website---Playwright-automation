@@ -84,18 +84,34 @@ function Content() {
     "@type": "Product",
     name: product.name,
     description: product.short_description ?? product.description ?? undefined,
-    image: typeof window !== "undefined" ? window.location.origin + resolveImage(product.image) : undefined,
+    image: SITE_URL + resolveImage(product.image),
     offers: {
       "@type": "Offer",
       priceCurrency: "INR",
       price: Number(product.discount_price ?? product.price),
       availability: (product.stock ?? 0) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      url: `${SITE_URL}/`,
     },
   };
+
+  const faqLd = faq.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faq.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      }
+    : null;
 
   return (
     <div className="min-h-screen bg-background">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ldjson) }} />
+      {faqLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      )}
       <Nav storeName={settings.store_name} />
       <main>
         <Hero product={product} />
